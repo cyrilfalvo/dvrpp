@@ -21,14 +21,13 @@ public :
   ~DVR();
 
   void SetDimension(int DimV);
-  int  AddHermBasis(int mode,int N,double Freq, double Delta, double Xeq);
-  int  AddSineBasis(int mode,int N,double Freq, double Delta, double Xeq);
-  int  AddExpBasis(int mode,int N,double Freq, double Delta, double Xeq);
+  int  AddHermBasis(int mode,int N,double Fact, double Delta, double Xeq);
+  int  AddSineBasis(int mode,int N,double Fact, double Delta, double Xeq);
+  int  AddExpBasis(int mode,int N,double Fact, double Delta, double Xeq);
   int  PrepareDvr();
   int  GetNodeCoord(int index, double* R);
   int  LoadPotential(double* V);
   int  LoadPotential(int index, double V);
-  int  LoadDiagOperator(int index, double A, int rank);
 	
 #ifdef _ARPACK_
   int SolveHamiltonianArpack(int nev, int ncv);
