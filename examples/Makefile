@@ -6,10 +6,9 @@
  
 
 CC       = g++-14
-AR       = ar
+LD       = g++-14
 CFLAGS   = -O3 
-#CFLAGS   = -O3 -D_ARPACK_
-
+LIBS     = -L/opt/homebrew/opt/lapack/lib -llapack  ../libdvr.a
 
 #CC       = pgCC
 #LD       = pgCC
@@ -20,13 +19,10 @@ CFLAGS   = -O3
 OBJ_DIR = obj
 SRC_DIR = src
 
-PROG     = libdvr.a
+PROG     = test.x
 LISTEOBJ = \
-        ${OBJ_DIR}/BasisSet.o \
-        ${OBJ_DIR}/BasisHerm.o \
-        ${OBJ_DIR}/BasisSine.o \
-        ${OBJ_DIR}/BasisExp.o \
-        ${OBJ_DIR}/DVR++.o \
+	${OBJ_DIR}/ex_morse.o
+
 #
 # compilation
 #
@@ -40,7 +36,7 @@ all       : $(PROG)
 # edition de lien
 #
 $(PROG) : $(LISTEOBJ)
-	$(AR) cr $(PROG) $(LISTEOBJ) 
+	$(LD) -o $(PROG) $(CFLAGS) $(LISTEOBJ) $(LIBS)
 #
 # effacement des fichiers intermediaires
 #
