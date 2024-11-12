@@ -72,8 +72,8 @@ int BasisSet::ComputeNodes() {
   return SUCCESS;
 }
 
-void BasisSet::SetFreq(double FreqV) {
-  Freq = FreqV;
+void BasisSet::SetFact(double FactV) {
+  Fact = FactV;
 }
 
 

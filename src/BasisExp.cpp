@@ -37,7 +37,7 @@ int BasisExp::SetBasisSet(int Size, double DeltaV, double X0V){
 }
 
 int BasisExp::ComputeKineticOperator() {
-  if (Freq  == 0) { return FAILURE; }
+  if (Fact  == 0) { return FAILURE; }
   if (Tq    == 0) { return FAILURE; }	
   if (Delta == 0) { return FAILURE; }
   if (N     == 0) { return FAILURE; }
@@ -46,10 +46,10 @@ int BasisExp::ComputeKineticOperator() {
   for(int i=0;i<N;i++) {
     for(int j=0;j<N;j++) {
       if (i==j) {
-        Tq[i+i*N] = PI*PI*Freq/6./L/L*((double)N*(double)N-1);
+        Tq[i+i*N] = PI*PI*Fact/6./L/L*((double)N*(double)N-1);
       }
       else {
-        Tq[i+j*N] = PI*PI*Freq/L/L*pow(-1.,i-j)*cos(PI*(double)(i-j)/(double)N)/pow( sin(PI*(double)(i-j)/(double)N),2);
+        Tq[i+j*N] = PI*PI*Fact/L/L*pow(-1.,i-j)*cos(PI*(double)(i-j)/(double)N)/pow( sin(PI*(double)(i-j)/(double)N),2);
       }
     }
   }

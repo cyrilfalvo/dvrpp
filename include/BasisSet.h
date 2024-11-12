@@ -23,7 +23,7 @@ public:
   BasisSet();
   ~BasisSet();
   
-  void SetFreq(double FreqV);
+  void SetFact(double FactV);
   int ComputeNodes();
   
   virtual int ComputeKineticOperator();
@@ -39,7 +39,7 @@ public:
   double* Basis;
   double Delta;
   double X0;
-  double Freq;
+  double Fact;
   
 };
 
