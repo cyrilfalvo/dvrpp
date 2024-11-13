@@ -19,7 +19,7 @@ LIBS     = -L/opt/homebrew/opt/lapack/lib -llapack  ../libdvr.a
 OBJ_DIR = obj
 SRC_DIR = src
 
-PROG     = test.x
+PROG     = ex_morse.x
 LISTEOBJ = \
 	${OBJ_DIR}/ex_morse.o
 
