@@ -1,5 +1,5 @@
 # dvrpp
-dvr++ is package to diagonalize quantum Hamiltonian using multidimensional DVR.
+dvr++ is a package to diagonalize quantum Hamiltonian using multidimensional DVR.
 It can be used in C++ but also in C and Fortran
 
 The Hamiltonian should be in the following form
