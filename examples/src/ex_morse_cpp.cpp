@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <string>
 #include <cmath>
-#include "../../include/DVR++.h"
+#include "../../include/DVRpp.h"
 
 using namespace std;
 
@@ -38,12 +38,15 @@ int main (int argc, char * argv[]) {
   DVR*  Dvr = new DVR();
 
   int    np = 20;
+  int    size;
   
   Dvr->SetDimension(1);
   Dvr->AddHermBasis(0,np,1.,1.2,2.50);
   Dvr->PrepareDvr();
-  
-  for(int i=0;i<np;i++) {
+ 
+  size = Dvr->GetSize();
+ 
+  for(int i=0;i<size;i++) {
     double QQ;
     Dvr->GetNodeCoord(i,&QQ);
     double Potential = morse(QQ);

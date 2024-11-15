@@ -1,5 +1,5 @@
 
-#include "../include/DVR++.h"
+#include "../include/DVRpp.h"
 #include "../include/BasisHerm.h"
 #include "../include/BasisSine.h"
 #include "../include/BasisExp.h"
@@ -13,6 +13,7 @@
 #include <ctime>
 
 DVR::DVR() {
+  Basis = 0;
   Dim = 0;
   Size = 0;
   Vi = 0;
@@ -22,6 +23,7 @@ DVR::DVR() {
   MaxGrid = 0;
   Pop = 0;
   Fact = 0;
+  flag = 1;
 }
 
 DVR::~DVR() {
@@ -30,7 +32,7 @@ DVR::~DVR() {
     delete [] Basis;
     Basis = 0;
   }
-  if(Basis!=0) { delete [] Basis; }  
+  if (Basis!=0) { delete [] Basis; }  
   if (Vi != 0) { delete [] Vi; }
   if ( EVectors != 0) { delete [] EVectors; }
   if ( EEnergies != 0) { delete [] EEnergies; }	
@@ -45,6 +47,11 @@ DVR::~DVR() {
   MaxGrid = 0;
   Pop = 0;
   Fact = 0;
+  flag = 1;
+}
+
+int DVR::GetSize() {
+  return Size;
 }
 
 void DVR::SetDimension(int DimV) {
@@ -116,33 +123,33 @@ int DVR::PrepareDvr() {
   Fact = new int[Dim];
   Fact[0] = 1;
   for(int d=1;d<Dim;d++) { Fact[d] = Fact[d-1]*NGrid[d-1]; }
+
+  flag = 0; // everything is ok
   
   return EXIT_SUCCESS;
 }
 
-int DVR::LoadPotential(int index, double V) {
-  if(Vi == 0 ) { return EXIT_FAILURE; }
+void DVR::LoadPotential(int index, double V) {
+  if(flag==1) { return ; }
   Vi[index] = V;
-  return EXIT_SUCCESS;
 }
-
-int DVR::LoadPotential(double* V) {
-  if(Vi == 0) { return EXIT_FAILURE; }
+ 
+void DVR::LoadPotential(double* V) {
+  if(flag==1) { return ; }
   for(int i=0;i<Size;i++) {
     Vi[i] = V[i];
   }
-  return EXIT_SUCCESS;
 }
 
-int DVR::GetNodeCoord(int index, double* R) {
+void DVR::GetNodeCoord(int index, double* R) {
+  if(flag==1) { return ; }
   for(int i=0;i<Dim;i++) {
     R[i] = Basis[i]->Xi[index % NGrid[i]];
     index /= NGrid[i];
   }
-  return EXIT_SUCCESS;
 }
 
-int DVR::MultHamiltonian(double* d1, double* d2) {
+void DVR::MultHamiltonian(double* d1, double* d2) {
   double* Tq;
   for(int i=0;i<Size;i++) {
     d2[i] = Vi[i]*d1[i];
@@ -158,11 +165,11 @@ int DVR::MultHamiltonian(double* d1, double* d2) {
       }
     }
    }
-  return EXIT_SUCCESS;
 }
 
 int DVR::SolveHamiltonianLapack() { 
-  
+  if(flag==1) { return EXIT_FAILURE; }
+
   if(EVectors != 0 ) { delete [] EVectors; }
   if(EEnergies != 0 ) { delete [] EEnergies; } 
 
@@ -214,6 +221,7 @@ int DVR::SolveHamiltonianLapack() {
 
 #ifdef _ARPACK_
 int DVR::SolveHamiltonianArpack(int nev, int ncv) {
+  if(flag==1) { return EXIT_FAILURE; }
   
   if(EVectors != 0 ) { delete [] EVectors; }
   if(EEnergies != 0 ) { delete [] EEnergies; } 
@@ -288,6 +296,7 @@ double DVR::GetEnergy(int i) {
 }
 
 int DVR::GetVector(int i, double* Psi) {
+  if (EVectors == 0) { return EXIT_FAILURE; } 
   double* Pt = EVectors + i*Size;
   for(int j=0;j<Size;j++) {
     Psi[j] = Pt[j];
@@ -324,8 +333,8 @@ int DVR::GetElmQOpt(int PowMax, int i, double* AvgOpt) {
 }
 
 double DVR::GetElmDiagOperatorSingle(int i, int j, double* Ai) {
-  if (Ai == 0) { return EXIT_FAILURE; }
-  if (EVectors == 0) { return EXIT_FAILURE; }
+  if (Ai == 0) { return 0.; }
+  if (EVectors == 0) { return 0.; }
   double* Pt1 = EVectors + i*Size;
   double* Pt2 = EVectors + j*Size; 
   double* Pt3 = Ai;
