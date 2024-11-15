@@ -3,43 +3,52 @@
 #     make all   (construction de l'executable)
 #     make clean (effacement des fichiers objets et de l'executable)
 #
- 
 
-CC       = g++-14
-LD       = g++-14
-CFLAGS   = -O3 
-LIBS     = -L/opt/homebrew/opt/lapack/lib -llapack  ../libdvr.a
+CC      = g++-14
+CFLAGS   = -O2 -Wall 
+CLIBS     = ../libdvr.a -llapack
 
-#CC       = pgCC
-#LD       = pgCC
-#CFLAGS    = -tp p7-64 -fastsse -O4  -pgf90libs 
-#LIBS      = -L${LIBDIR} -L/home/cyril_falvo/opt/ARPACK -larpack_LINUX -lacml -lfftw3
-#
+FF      = gfortran-14
+FFLAGS   = -cpp -O2 -Wall 
+FLIBS     = ../libdvr.a -llapack -lstdc++
 
 OBJ_DIR = obj
 SRC_DIR = src
 
-PROG     = ex_morse.x
-LISTEOBJ = \
-	${OBJ_DIR}/ex_morse.o
+PROG_CPP     = ex_morse_cpp.x
+PROG_FOR     = ex_morse_fortran.x
+
+LISTEOBJ_CPP = \
+	${OBJ_DIR}/ex_morse_cpp.o
+
+LISTEOBJ_FOR = \
+	${OBJ_DIR}/DVRpp_fortran_interface.o\
+	${OBJ_DIR}/ex_morse_fortran.o
+
 
 #
 # compilation
 #
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.f90
+	$(FF) $(FFLAGS) -c $< -o $@
+
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 #
 # dependances
 #
-all       : $(PROG)
+all       : $(PROG_CPP) $(PROG_FOR)
 #
 # edition de lien
 #
-$(PROG) : $(LISTEOBJ)
-	$(LD) -o $(PROG) $(CFLAGS) $(LISTEOBJ) $(LIBS)
+$(PROG_CPP) : $(LISTEOBJ_CPP)
+	$(CC) -o $(PROG_CPP) $(CFLAGS) $(LISTEOBJ_CPP) $(CLIBS)
+
+$(PROG_FOR) : $(LISTEOBJ_FOR)
+	$(FF) -o $(PROG_FOR) $(FFLAGS) $(LISTEOBJ_FOR) $(FLIBS)
 #
 # effacement des fichiers intermediaires
 #
 clean :
-	rm -f $(PROG) $(LISTEOBJ)
+	rm -f *.mod $(PROG_CPP) $(PROG_FOR) $(LISTEOBJ_CPP) $(LISTEOBJ_FOR)
 

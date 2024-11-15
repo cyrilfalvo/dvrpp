@@ -25,9 +25,9 @@ public :
   int  AddSineBasis(int mode,int N,double Fact, double Delta, double Xeq);
   int  AddExpBasis(int mode,int N,double Fact, double Delta, double Xeq);
   int  PrepareDvr();
-  int  GetNodeCoord(int index, double* R);
-  int  LoadPotential(double* V);
-  int  LoadPotential(int index, double V);
+  void  GetNodeCoord(int index, double* R);
+  void  LoadPotential(double* V);
+  void  LoadPotential(int index, double V);
 	
 #ifdef _ARPACK_
   int SolveHamiltonianArpack(int nev, int ncv);
@@ -40,14 +40,15 @@ public :
   int    GetElmDiagOperator(int i, int j, double* Ai, int rank,double* Op);
   int    GetElmQOpt(int PowMax,int i, double* AvgOpt);
   int    GetPop(int i,int* ni);
-  int    Size;
   int    GetVector(int i, double* Psi);
+  int    GetSize();
 	
 private:
 
 	BasisSet** Basis;
 	
 	int Dim;
+        int Size;
 	int* NGrid;
 	int MaxGrid;
 	
@@ -55,11 +56,14 @@ private:
   
 	double* EVectors;
 	double* EEnergies;
-
-	int MultHamiltonian(double* d1, double* d2);
+	
+    	void MultHamiltonian(double* d1, double* d2);
 	
 	int* Pop;
 	int* Fact;
+
+	int flag;   // this flag is used to check that everything is ok 
+
 };    
 
 #endif
