@@ -20,7 +20,6 @@ DVR::DVR() {
   EVectors = 0;
   EEnergies = 0;
   NGrid = 0;
-  MaxGrid = 0;
   Pop = 0;
   Fact = 0;
   flag = 1;
@@ -44,7 +43,6 @@ DVR::~DVR() {
   Vi = 0;
   Basis = 0;
   NGrid = 0;
-  MaxGrid = 0;
   Pop = 0;
   Fact = 0;
   flag = 1;
@@ -102,10 +100,6 @@ int DVR::PrepareDvr() {
   Size = 1;
   for(int i=0;i<Dim;i++) {
     Size *= NGrid[i];
-  }
-  MaxGrid=0;
-  for(int i=0;i<Dim;i++) {
-    if(MaxGrid<NGrid[i]) { MaxGrid=NGrid[i]; }
   }
   
   Vi = new double[Size];
@@ -313,6 +307,7 @@ int DVR::GetPop(int i, int* ni) {
   return EXIT_SUCCESS;
 }
 
+/*
 int DVR::GetElmQOpt(int PowMax, int i, double* AvgOpt) {
   if(AvgOpt==0) { return EXIT_FAILURE; }
   if(EVectors == 0 ) { return EXIT_FAILURE; }
@@ -331,6 +326,7 @@ int DVR::GetElmQOpt(int PowMax, int i, double* AvgOpt) {
   }
   return EXIT_SUCCESS;
 }
+*/
 
 double DVR::GetElmDiagOperatorSingle(int i, int j, double* Ai) {
   if (Ai == 0) { return 0.; }

@@ -50,7 +50,6 @@ private:
 	int Dim;
         int Size;
 	int* NGrid;
-	int MaxGrid;
 	
 	double* Vi;
   

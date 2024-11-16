@@ -40,7 +40,7 @@ extern "C" {
     dvr->GetNodeCoord(index, R);
   }
   
-  void DVRpp_LoadPotential_array(DVR* dvr, double* V) {
+  void DVRpp_LoadPotentialArray(DVR* dvr, double* V, int size) {
     dvr->LoadPotential(V);
   }
   
@@ -69,11 +69,13 @@ extern "C" {
   void DVRpp_GetElmDiagOperator(DVR* dvr, int i, int j, double* Ai, int rank, double* Op, int info) {
     info = dvr->GetElmDiagOperator(i,j,Ai,rank,Op);
   }
-  
+ 
+/* 
   void DVRpp_GetElmQOpt(DVR* dvr, int PowMax, int i, double* AvgOpt, int info) {
     info = dvr->GetElmQOpt(PowMax, i, AvgOpt);
   }
-  
+*/  
+
   void DVRpp_GetPop(DVR* dvr, int i, int* ni, int info) {
     info = dvr->GetPop(i,ni);
   }
