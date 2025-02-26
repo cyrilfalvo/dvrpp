@@ -37,7 +37,7 @@ int main (int argc, char * argv[]) {
 
   DVR*  Dvr = new DVR();
 
-  int    np = 20;
+  int    np = 31;
   int    size;
   
   Dvr->SetDimension(1);
@@ -51,12 +51,13 @@ int main (int argc, char * argv[]) {
     Dvr->GetNodeCoord(i,&QQ);
     double Potential = morse(QQ);
     Dvr->LoadPotential(i,Potential);
+    printf("%3d%16.4f%16.4f\n",i,QQ,Potential);
   }
-  
   Dvr->SolveHamiltonianLapack();
 
-  for(int i=0;i<10;i++) {
-    printf("%3d %16.4f %16.4f %16.4f\n",i,analytic(i),Dvr->GetEnergy(i),(Dvr->GetEnergy(i)-analytic(i)));
+  printf("\n\n"); 
+  for(int i=0;i<7;i++) {
+    printf("%3d%16.4f%16.4f%16.4f\n",i,analytic(i),Dvr->GetEnergy(i),(Dvr->GetEnergy(i)-analytic(i)));
   }
 
   return EXIT_SUCCESS;

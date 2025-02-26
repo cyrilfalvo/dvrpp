@@ -47,7 +47,8 @@ program ex_morse_fortran
   real(mkind) :: Edvr,Eana
   real(mkind), dimension(:), allocatable :: R
 
-  np = 20
+  !np = 20
+  np = 31
   info = 0
   size = 0
   dim = 1
@@ -55,6 +56,7 @@ program ex_morse_fortran
   dvr = DVRpp_create()
   call DVRpp_SetDimension(dvr, dim)
   call DVRpp_AddHermBasis(dvr,0,np,1.d0,1.2d0,2.5d0,info)
+  !call DVRpp_AddSineBasis(dvr,0,np,1.d0,0.5d0,-2.5d0,info)
   call DVRpp_PrepareDvr(dvr,info)
   size = DVRpp_GetSize(dvr)
 
@@ -63,11 +65,15 @@ program ex_morse_fortran
   do i=0,size-1
     call DVRpp_GetNodeCoord(dvr,i, R,dim)    
     call Dvrpp_LoadPotential(dvr,i,morse(R))
+    write(*,'(I3,2(F16.4))') i, R(1), morse(R)
   enddo
   
   call Dvrpp_SolveHamiltonianLapack(dvr,info)
 
-  do i=0,9
+  write(*,*)
+  write(*,*)
+
+  do i=0,6
    Edvr = Dvrpp_GetEnergy(dvr,i)
    Eana = analytic(i)
    write(*,'(I3,4(F16.4))') i, Eana,Edvr,Edvr-Eana
