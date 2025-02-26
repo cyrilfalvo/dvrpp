@@ -72,8 +72,8 @@ int BasisSet::ComputeNodes() {
   return SUCCESS;
 }
 
-void BasisSet::SetFact(double FactV) {
-  Fact = FactV;
+void BasisSet::SetA(double AV) {
+  A = AV;
 }
 
 
