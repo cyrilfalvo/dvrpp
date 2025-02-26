@@ -23,7 +23,7 @@ public:
   BasisSet();
   ~BasisSet();
   
-  void SetFact(double FactV);
+  void SetA(double AV);
   int ComputeNodes();
   
   virtual int ComputeKineticOperator();
@@ -39,7 +39,7 @@ public:
   double* Basis;
   double Delta;
   double X0;
-  double Fact;
+  double A;
   
 };
 

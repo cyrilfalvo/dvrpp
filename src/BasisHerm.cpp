@@ -32,7 +32,7 @@ int BasisHerm::SetBasisSet(int Size, double DeltaV, double X0V){
 }
 
 int BasisHerm::ComputeKineticOperator() {
-  if (Fact  == 0) { return FAILURE; }
+  if (A     == 0) { return FAILURE; }
   if (Tq    == 0) { return FAILURE; }	
   if (Delta == 0) { return FAILURE; }
   if (N     == 0) { return FAILURE; }
@@ -44,9 +44,9 @@ int BasisHerm::ComputeKineticOperator() {
       for(int k=0;k<N;k++) {
 	Tq[i+j*N] += Basis[k+i*N]*Basis[k+j*N]*double(2*k+1); 
       }
-      Tq[i+j*N] *= 0.5/pow(Delta,2)*Fact;
+      Tq[i+j*N] *= 0.5/pow(Delta,2)*A;
     }
-    Tq[i+i*N] += -0.5*pow(Xi[i]-X0,2)/pow(Delta,4)*Fact;
+    Tq[i+i*N] += -0.5*pow(Xi[i]-X0,2)/pow(Delta,4)*A;
   }
   return SUCCESS;
 }

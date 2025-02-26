@@ -62,32 +62,32 @@ void DVR::SetDimension(int DimV) {
   }
 }
 
-int DVR::AddHermBasis(int mode, int N,double Fact, double Delta, double Xeq) {
+int DVR::AddHermBasis(int mode, int N,double A, double Delta, double Xeq) {
   if ( (mode>=Dim) && (mode<0) ) { return EXIT_FAILURE; }
   if (Basis[mode] != 0 ) { return EXIT_FAILURE; }
   NGrid[mode] = N;
   Basis[mode] = new BasisHerm();
-  Basis[mode]->SetFact(Fact);
+  Basis[mode]->SetA(A);
   Basis[mode]->SetBasisSet(N,Delta,Xeq);
   return EXIT_SUCCESS;
 }
 
-int DVR::AddSineBasis(int mode, int N,double Fact, double Delta, double Xeq) {
+int DVR::AddSineBasis(int mode, int N,double A, double Delta, double Xeq) {
   if ( (mode>=Dim) && (mode<0) ) { return EXIT_FAILURE; }
   if (Basis[mode] != 0 ) { return EXIT_FAILURE; }
   NGrid[mode] = N;
   Basis[mode] = new BasisSine();
-  Basis[mode]->SetFact(Fact);
+  Basis[mode]->SetA(A);
   Basis[mode]->SetBasisSet(N,Delta,Xeq);
   return EXIT_SUCCESS;
 }
 
-int DVR::AddExpBasis(int mode, int N,double Fact, double Delta, double Xeq) {
+int DVR::AddExpBasis(int mode, int N,double A, double Delta, double Xeq) {
   if ( (mode>=Dim) && (mode<0) ) { return EXIT_FAILURE; }
   if (Basis[mode] != 0 ) { return EXIT_FAILURE; }
   NGrid[mode] = N;
   Basis[mode] = new BasisExp();
-  Basis[mode]->SetFact(Fact);
+  Basis[mode]->SetA(A);
   Basis[mode]->SetBasisSet(N,Delta,Xeq);
   return EXIT_SUCCESS;
 }

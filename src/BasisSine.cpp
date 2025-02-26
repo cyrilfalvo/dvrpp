@@ -40,7 +40,7 @@ int BasisSine::SetBasisSet(int Size, double DeltaV, double X0V){
 }
 
 int BasisSine::ComputeKineticOperator() {
-  if (Fact  == 0) { return FAILURE; }
+  if (A     == 0) { return FAILURE; }
   if (Tq    == 0) { return FAILURE; }	
   if (Delta == 0) { return FAILURE; }
   if (N     == 0) { return FAILURE; }
@@ -49,11 +49,11 @@ int BasisSine::ComputeKineticOperator() {
   for(int i=0;i<N;i++) {
     for(int j=0;j<N;j++) {
       if (i==j) {
-        Tq[i+i*N] = 0.25*PI*PI*Fact/L/L*
+        Tq[i+i*N] = 0.25*PI*PI*A/L/L*
 	  (double(2*M*M+1)/3. - 1./pow(sin(PI*double(i+1)/double(M)),2));
       }
       else {
-        Tq[i+j*N] = 0.25*PI*PI*Fact/L/L*double(pow(-1.,i-j))*
+        Tq[i+j*N] = 0.25*PI*PI*A/L/L*double(pow(-1.,i-j))*
 	  (1./pow(sin(PI*double(i-j)/double(2*M)),2) - 1./pow(sin(PI*double(i+j+2)/double(2*M)),2) );
       }
     }
